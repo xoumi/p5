@@ -1,0 +1,132 @@
+$accent: #f47a9e
+$track-color: $accent
+$thumb-color: #fff
+
+$thumb-radius: 10px 
+$thumb-height: 15px 
+$thumb-width: 15px 
+$thumb-border-width: 3px 
+$thumb-border-color: $accent
+
+$track-width: 100% 
+$track-height: 3px
+$track-border-width: 0px 
+$track-border-color: $accent
+$track-radius: 12px 
+$contrast: 5% 
+
+$ie-bottom-track-color: darken($track-color, $contrast) 
+
+.slider
+  display: flex
+  align-items: center
+  font-family: sans-serif
+  font-size: .7em
+  &-label
+    width: 100px
+    transform: translateY(-1px)
+    padding-right: 5px
+    overflow-x: hidden
+    white-space: nowrap
+    text-overflow: ellipsis
+  &-current
+    width: 50px
+    text-align: right
+
+@mixin track 
+  cursor: default
+  height: $track-height
+  transition: all .2s ease
+  width: $track-width
+
+
+@mixin thumb
+  background: $thumb-color
+  border: $thumb-border-width solid $thumb-border-color
+  border-radius: $thumb-radius
+  box-sizing: border-box
+  cursor: default
+  height: $thumb-height
+  width: $thumb-width
+
+
+[type='range']
+  -webkit-appearance: none
+  background: transparent
+  margin: $thumb-height / 1.5 5px
+  width: $track-width
+  &::-moz
+    margin: 0
+
+  &::-moz-focus-outer
+    border: 0
+
+  &:hover
+    box-shadow: 0 0 0
+  &:focus
+    outline: 0
+
+    &::-webkit-slider-runnable-track
+      background: lighten($track-color, $contrast)
+
+    &::-ms-fill-lower
+      background: $track-color
+
+    &::-ms-fill-upper
+      background: lighten($track-color, $contrast)
+
+  &::-webkit-slider-runnable-track 
+    @include track
+    background: $track-color
+    border: $track-border-width solid $track-border-color
+    border-radius: $track-radius
+
+  &::-webkit-slider-thumb
+    @include thumb
+    -webkit-appearance: none
+    margin-top: ((-$track-border-width * 2 + $track-height) / 2 - $thumb-height / 2)
+
+  &::-moz-range-track, &::-moz-range-progress
+    @include track
+    background: opacify($track-color, .1)
+    border: $track-border-width solid $track-border-color
+    border-radius: $track-radius
+  &::-moz-range-progress
+    background-color: $accent
+
+  &::-moz-range-thumb
+    @include thumb
+
+  &::-ms-track
+    @include track
+    background: transparent
+    border-color: transparent
+    border-width: ($thumb-height / 2) 0
+    color: transparent
+
+  &::-ms-fill-lower
+    background: $ie-bottom-track-color
+    border: $track-border-width solid $track-border-color
+    border-radius: ($track-radius * 2)
+
+  &::-ms-fill-upper
+    background: $track-color
+    border: $track-border-width solid $track-border-color
+    border-radius: ($track-radius * 2)
+
+  &::-ms-thumb
+    @include thumb
+    margin-top: $track-height / 4
+
+  &:disabled
+    &::-webkit-slider-thumb,
+    &::-moz-range-thumb,
+    &::-ms-thumb,
+    &::-webkit-slider-runnable-track,
+    &::-ms-fill-lower,
+    &::-ms-fill-upper 
+      cursor: not-allowed
+
+@supports (-moz-appearance:none)
+  [type='range']
+    margin: $thumb-height / 4 5px
